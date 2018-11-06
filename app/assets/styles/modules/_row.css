@@ -1,0 +1,11 @@
+
+// GUTTERS - for gutting rows content. Apply on rows.
+// ROWS - for creating tables.
+
+.row{
+
+
+    &--gutters {
+        margin-right: -65px;
+    }
+}

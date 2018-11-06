@@ -1,0 +1,12 @@
+
+/* Often website sections have the same design title. */
+
+.section-title{
+    font-size: 2.55rem;
+    font-weight: 300;
+    text-align: center;
+
+    @mixin atSmall {
+        font-size: 3.75rem;
+    }
+}
