@@ -17086,7 +17086,16 @@ function () {
 
 
       var controller = function (budgetCtrl, UICtrl) {
-        var DOM = UICtrl.getDOMstrings();
+        var setupEventListeners = function setupEventListeners() {
+          var DOM = UICtrl.getDOMstrings();
+          document.querySelector(DOM.inputButton).addEventListener('click', ctrlAddItem);
+          document.addEventListener('keypress', function (event) {
+            //    Event.which for older browsers support.
+            if (event.keyCode === 13 || event.which === 13) {
+              ctrlAddItem();
+            }
+          });
+        };
 
         var ctrlAddItem = function ctrlAddItem() {
           //  TO DO List
@@ -17098,14 +17107,14 @@ function () {
           // 5. Display The budget on the UI
         };
 
-        document.querySelector(DOM.inputButton).addEventListener('click', ctrlAddItem);
-        document.addEventListener('keypress', function (event) {
-          //    Event.which for older browsers support.
-          if (event.keyCode === 13 || event.which === 13) {
-            ctrlAddItem();
+        return {
+          init: function init() {
+            setupEventListeners();
           }
-        });
+        };
       }(budgetController, UIController);
+
+      controller.init();
     }
   }]);
 
