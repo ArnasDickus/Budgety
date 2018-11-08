@@ -17056,29 +17056,32 @@ function () {
   _createClass(budgety, [{
     key: "budgety",
     value: function budgety() {
-      var budgetController = function () {
-        var x = 23;
+      // BUDGET CONTROLLER
+      var budgetController = function () {//    Some Code
+      }(); // UI CONTROLLER
 
-        var add = function add(a) {
-          return x + a;
-        };
 
-        return {
-          publicTest: function publicTest(b) {
-            return add(b);
-          }
-        };
-      }();
+      var UIController = function () {}(); // GLOBAL APP CONTROLLER
 
-      var UIController = function () {}();
 
       var controller = function (budgetCtrl, UICtrl) {
-        var z = budgetCtrl.publicTest(5);
-        return {
-          anotherPublic: function anotherPublic() {
-            console.log(z);
-          }
+        var ctrlAddItem = function ctrlAddItem() {
+          //  TO DO List
+          // 1.Get the filed input data
+          // 2. Add the item to the budget controlller
+          // 3. Add the item to the UI.
+          // 4. Calculate the budget.
+          // 5. Display The budget on the UI
+          console.log("hello");
         };
+
+        document.querySelector(".add__btn").addEventListener('click', ctrlAddItem);
+        document.addEventListener('keypress', function (event) {
+          //    Event.which for older browsers support.
+          if (event.keyCode === 13 || event.which === 13) {
+            ctrlAddItem();
+          }
+        });
       }(budgetController, UIController);
     }
   }]);
