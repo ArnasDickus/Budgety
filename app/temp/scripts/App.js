@@ -95,11 +95,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var bootstrap__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2);
 /* harmony import */ var bootstrap__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(bootstrap__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _modules_Copyright__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(5);
+/* harmony import */ var _modules_Budgety__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(6);
 // jquery is used for bootstrap
 
 
 
-var copyright = new _modules_Copyright__WEBPACK_IMPORTED_MODULE_2__["default"](); // Testing-comments
+
+var copyright = new _modules_Copyright__WEBPACK_IMPORTED_MODULE_2__["default"]();
+var budgety = new _modules_Budgety__WEBPACK_IMPORTED_MODULE_3__["default"](); // Testing-comments
 
 /***/ }),
 /* 1 */
@@ -17028,6 +17031,62 @@ function () {
 }();
 
 /* harmony default export */ __webpack_exports__["default"] = (Copyright);
+
+/***/ }),
+/* 6 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var budgety =
+/*#__PURE__*/
+function () {
+  function budgety() {
+    _classCallCheck(this, budgety);
+
+    this.budgety();
+  }
+
+  _createClass(budgety, [{
+    key: "budgety",
+    value: function budgety() {
+      var budgetController = function () {
+        var x = 23;
+
+        var add = function add(a) {
+          return x + a;
+        };
+
+        return {
+          publicTest: function publicTest(b) {
+            return add(b);
+          }
+        };
+      }();
+
+      var UIController = function () {}();
+
+      var controller = function (budgetCtrl, UICtrl) {
+        var z = budgetCtrl.publicTest(5);
+        return {
+          anotherPublic: function anotherPublic() {
+            console.log(z);
+          }
+        };
+      }(budgetController, UIController);
+    }
+  }]);
+
+  return budgety;
+}();
+
+/* harmony default export */ __webpack_exports__["default"] = (budgety);
 
 /***/ })
 /******/ ]);
