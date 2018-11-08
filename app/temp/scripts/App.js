@@ -17057,7 +17057,29 @@ function () {
     key: "budgety",
     value: function budgety() {
       // BUDGET CONTROLLER
-      var budgetController = function () {//    Some Code
+      var budgetController = function () {
+        var Expanse = function Expanse(id, description, value) {
+          this.id = id;
+          this.description = description;
+          this.value = value;
+        };
+
+        var Income = function Income(id, description, value) {
+          this.id = id;
+          this.description = description;
+          this.value = value;
+        };
+
+        var data = {
+          allItems: {
+            exp: [],
+            inc: []
+          },
+          totals: {
+            exp: 0,
+            inc: 0
+          }
+        };
       }(); // UI CONTROLLER
 
 
