@@ -2,7 +2,7 @@
 /* Add only global changes */
 
 body {
-  font-family: 'Roboto', sans-serif;
+  font-family: Open Sans;
 
   font-size: $base_font_size;
   line-height: $base_line_height;
@@ -34,5 +34,8 @@ img {
 }
 
 * {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
 }
+
