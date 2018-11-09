@@ -17146,6 +17146,16 @@ function () {
 
             document.querySelector(element).insertAdjacentHTML('beforeend', newHtml);
           },
+          clearFields: function clearFields() {
+            var fields, fieldsArr;
+            fields = document.querySelectorAll(DOMstrings.inputDescription + ', ' + DOMstrings.inputValue); // Tricks querySelector to slice array
+
+            fieldsArr = Array.prototype.slice.call(fields);
+            fieldsArr.forEach(function (current, index, array) {
+              current.value = "";
+            });
+            fieldsArr[0].focus();
+          },
           getDOMstrings: function getDOMstrings() {
             return DOMstrings;
           }
@@ -17173,9 +17183,10 @@ function () {
 
           newItem = budgetCtrl.addItem(input.type, input.description, input.value); // 3. Add the item to the UI.
 
-          UICtrl.addListItem(newItem, input.type);
-          ; // 4. Calculate the budget.
-          // 5. Display The budget on the UI
+          UICtrl.addListItem(newItem, input.type); // 4. Clear fields
+
+          UICtrl.clearFields(); // 5. Calculate the budget.
+          // 6. Display The budget on the UI
         };
 
         return {
