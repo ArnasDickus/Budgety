@@ -28,8 +28,36 @@ class budgety{
                     exp: 0,
                     inc: 0
                 }
-            }
+            };
 
+            return {
+                addItem: function(type, des, val){
+                   let newItem, ID;
+
+                    // Create new Id
+                    if(data.allItems[type].length > 0){
+                        ID = data.allItems[type][data.allItems[type].length -1].id + 1;
+                    }else{
+                        ID = 0;
+                    }
+                   
+
+                    // Recreate new item based on 'inc' or 'exp' type
+                    if(type === 'exp'){
+                        newItem = new Expense(ID, des, val);
+                    }else if (type === "inc"){
+                        newItem = new Income(ID,des,val)
+                    }
+                    // Push it into our data structure
+                   data.allItems[type].push(newItem);
+
+                //    Return the new element
+                   return newItem;
+                },
+                testing: function(){
+                    console.log(data);
+                }
+            };
         
 
         })();
@@ -47,9 +75,9 @@ class budgety{
                 getInput: function() {
 
                     return {
-                    type: document.querySelector(DOMstrings.inputType).value, // Will be either inc or exp
-                    description: document.querySelector(DOMstrings.inputDescription).value,
-                    value: document.querySelector(DOMstrings.inputValue).value
+                        type: document.querySelector(DOMstrings.inputType).value, // Will be either inc or exp
+                        description: document.querySelector(DOMstrings.inputDescription).value,
+                        value: document.querySelector(DOMstrings.inputValue).value
                     };
                 },
                 getDOMstrings: function(){
@@ -79,12 +107,13 @@ class budgety{
         
         
         let ctrlAddItem = function(){
+            let input, newItem;
             //  TO DO List
             // 1.Get the filed input data
-            let input = UICtrl.getInput();
-            console.log(input);
+            input = UICtrl.getInput();
 
             // 2. Add the item to the budget controlller
+            newItem = budgetCtrl.addItem(input.type, input.description, input.value);
             // 3. Add the item to the UI.
             // 4. Calculate the budget.
             // 5. Display The budget on the UI

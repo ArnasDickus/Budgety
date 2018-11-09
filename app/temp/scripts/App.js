@@ -17080,6 +17080,32 @@ function () {
             inc: 0
           }
         };
+        return {
+          addItem: function addItem(type, des, val) {
+            var newItem, ID; // Create new Id
+
+            if (data.allItems[type].length > 0) {
+              ID = data.allItems[type][data.allItems[type].length - 1].id + 1;
+            } else {
+              ID = 0;
+            } // Recreate new item based on 'inc' or 'exp' type
+
+
+            if (type === 'exp') {
+              newItem = new Expense(ID, des, val);
+            } else if (type === "inc") {
+              newItem = new Income(ID, des, val);
+            } // Push it into our data structure
+
+
+            data.allItems[type].push(newItem); //    Return the new element
+
+            return newItem;
+          },
+          testing: function testing() {
+            console.log(data);
+          }
+        };
       }(); // UI CONTROLLER
 
 
@@ -17120,11 +17146,12 @@ function () {
         };
 
         var ctrlAddItem = function ctrlAddItem() {
-          //  TO DO List
+          var input, newItem; //  TO DO List
           // 1.Get the filed input data
-          var input = UICtrl.getInput();
-          console.log(input); // 2. Add the item to the budget controlller
-          // 3. Add the item to the UI.
+
+          input = UICtrl.getInput(); // 2. Add the item to the budget controlller
+
+          newItem = budgetCtrl.addItem(input.type, input.description, input.value); // 3. Add the item to the UI.
           // 4. Calculate the budget.
           // 5. Display The budget on the UI
         };
