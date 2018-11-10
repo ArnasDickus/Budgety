@@ -181,7 +181,8 @@ body {
 
 .expenses {
     float: left;
-    width: 475px;
+    width: 475px; 
+    
 }
 
 h2 {

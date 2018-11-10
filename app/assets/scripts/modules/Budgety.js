@@ -1,3 +1,4 @@
+import { isRegExp } from "util";
 
 
 class budgety{
@@ -8,16 +9,28 @@ class budgety{
         // BUDGET CONTROLLER
         let budgetController = (function() {
            
-           let Expense = function(id, description, value){
-               this.id = id;
-               this.description = description;
-               this.value = value;
-           };
-           let Income = function(id, description, value){
-               this.id = id;
-               this.description = description;
-               this.value = value;
-           };
+            class Expense {
+                constructor(id, description, value) {
+                    this.id = id;
+                    this.description = description;
+                    this.value = value;
+                }
+            }
+            class Income {
+                constructor(id, description, value) {
+                    this.id = id;
+                    this.description = description;
+                    this.value = value;
+                };
+            };
+            let calculateTotal = function(type){
+                let sum = 0;
+                data.allItems[type].forEach(function(cur) {
+                    sum = sum + cur.value;
+                });
+                data.totals[type] = sum;
+
+            };
 
             let data = {
                 allItems: {
@@ -27,7 +40,9 @@ class budgety{
                 totals: {
                     exp: 0,
                     inc: 0
-                }
+                },
+                budget: 0,
+                percentage: -1
             };
 
             return {
@@ -54,6 +69,33 @@ class budgety{
                 //    Return the new element
                    return newItem;
                 },
+                calculateBudget: function(){
+                    
+                    // calculate total income and expense
+                    calculateTotal('exp');
+                    calculateTotal('inc');
+
+                    // Calculate the budget: income - expenses
+                    data.budget = data.totals.inc - data.totals.exp;
+
+                    // Calculate the percentage of income that we spent
+
+                    if (data.totals.inc > 0){
+                    data.percentage = Math.round((data.totals.exp / data.totals.inc) * 100);
+                    }else{
+                        data.percentage = -1;
+                    }
+                    
+
+                },
+                getBudget: function(){
+                    return{
+                        budget: data.budget,
+                        totalInc: data.totals.inc,
+                        totalExp: data.totals.exp,
+                        percentage: data.percentage
+                    };
+                },
                 testing: function(){
                     console.log(data);
                 }
@@ -79,7 +121,7 @@ class budgety{
                     return {
                         type: document.querySelector(DOMstrings.inputType).value, // Will be either inc or exp
                         description: document.querySelector(DOMstrings.inputDescription).value,
-                        value: document.querySelector(DOMstrings.inputValue).value
+                        value: parseFloat(document.querySelector(DOMstrings.inputValue).value)
                     };
                 },
 
@@ -148,7 +190,17 @@ class budgety{
         };
 
 
-        
+        let updateBudget = function(){
+
+            // 1. Calculate the budget.
+            budgetCtrl.calculateBudget();
+
+            // 2. Return the budget
+            let budget = budgetCtrl.getBudget();
+
+            // 3. Display The budget on the UI
+            console.log(budget);
+        }    
         
         let ctrlAddItem = function(){
             let input, newItem;
@@ -156,6 +208,7 @@ class budgety{
             // 1.Get the filed input data
             input = UICtrl.getInput();
 
+            if(input.description !== "" && !isNaN(input.value) && input.value > 0){
             // 2. Add the item to the budget controlller
             newItem = budgetCtrl.addItem(input.type, input.description, input.value);
 
@@ -165,9 +218,11 @@ class budgety{
             // 4. Clear fields
             UICtrl.clearFields();
 
-            // 5. Calculate the budget.
+            // 5. Calculate and update Budget
+            updateBudget();
+            };
 
-            // 6. Display The budget on the UI
+            
 
 
         }; 
