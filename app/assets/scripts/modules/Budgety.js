@@ -1,4 +1,4 @@
-import { isRegExp } from "util";
+
 
 
 class budgety{
@@ -14,8 +14,22 @@ class budgety{
                     this.id = id;
                     this.description = description;
                     this.value = value;
+                    this.percentage = -1;
                 }
-            }
+            };
+
+            Expense.prototype.calcPercentage = function(totalIncome){
+                if(totalIncome > 0){
+                    this.percentage = Math.round((this.value / totalIncome) * 100);
+                }else{
+                    this.percentage = -1;
+                }
+            };
+
+            Expense.prototype.getPercentage = function(){
+                return this.percentage;
+            };
+
             class Income {
                 constructor(id, description, value) {
                     this.id = id;
@@ -104,6 +118,23 @@ class budgety{
                     
 
                 },
+
+                calculatePercentages: function(){
+                    
+                    data.allItems.exp.forEach(function(cur){
+                        cur.calcPercentage(data.totals.inc);
+                    });
+                },
+
+                getPercentage: function(){
+
+                    let allPerc = data.allItems.exp.map(function(cur){
+                        return cur.getPercentage();
+                    });
+                    return allPerc;
+
+                },
+
                 getBudget: function(){
                     return{
                         budget: data.budget,
@@ -123,17 +154,18 @@ class budgety{
         let UIController = (function(){
             // Creating data structure if variables name changes.
             let DOMstrings = {
-                inputType:        '.add__type',
-                inputDescription: '.add__description',
-                inputValue:       '.add__value',
-                inputButton:      '.add__btn',
-                incomeContainer:   '.income__list',
-                expensesContainer: '.expenses__list',
-                budgetLabel:       '.budget__value',
-                incomeLabel:       '.budget__income--value',
+                inputType:          '.add__type',
+                inputDescription:   '.add__description',
+                inputValue:         '.add__value',
+                inputButton:        '.add__btn',
+                incomeContainer:    '.income__list',
+                expensesContainer:  '.expenses__list',
+                budgetLabel:        '.budget__value',
+                incomeLabel:        '.budget__income--value',
                 expensesLabel:      '.budget__expenses--value',
                 percentageLabel:    '.budget__expenses--percentage',
-                container:          '.container'
+                container:          '.container',
+                expensesPercLabel:  '.item__percentage'
             }
 
             return {
@@ -205,6 +237,28 @@ class budgety{
                     }
                 },
 
+                displayPercentages: function(percentages){
+                    
+                    let fields = document.querySelectorAll(DOMstrings.expensesPercLabel);
+
+                    let nodeListForEach = function(list, callback){
+                        for(let i = 0; i < list.length; i++){
+                            callback(list[i], i);
+                        }
+                    };
+
+                    nodeListForEach(fields, function(current, index){
+                        
+                        if(percentages[index] > 0){
+                            current.textContent = percentages[index] + '%';
+                        }else{
+                            current.textContent = '---';
+                        }
+                         
+                    })  
+
+                },
+
                 getDOMstrings: function(){
                     return DOMstrings;
                 }
@@ -241,7 +295,17 @@ class budgety{
 
             // 3. Display The budget on the UI
             UICtrl.displayBudget(budget);
-        }    
+        };
+
+        let updatePercentages = function() {
+
+            // 1. Calculate percentages.
+            budgetCtrl.calculatePercentages();
+            // 2. Read percentages from the budget controller.
+            let percentages = budgetCtrl.getPercentage();
+            // 3. Update the UI with the new percentages.
+            UICtrl.displayPercentages(percentages);
+        };
         
         let ctrlAddItem = function(){
             let input, newItem;
@@ -261,6 +325,9 @@ class budgety{
 
             // 5. Calculate and update Budget
             updateBudget();
+
+            // 6. Calculate and update percentages
+            updatePercentages();
             };
         }; 
         let ctrlDeleteItem = function(event){
@@ -282,6 +349,9 @@ class budgety{
 
                 // 3. Update and show the new budget.
                 updateBudget();
+
+                // 4. Calculate and update percentages
+                updatePercentages();
             }
         };
 
