@@ -187,6 +187,13 @@ class budgety{
                     return (type === 'exp' ? '-' : '+') + ' ' + int + '.' + dec;
                 };
 
+                let nodeListForEach = function(list, callback){
+                    for (let i = 0; i < list.length; i++) {
+                        callback(list[i],[i]);
+                        
+                    }
+                }
+
             return {
                 getInput: function() {
 
@@ -262,12 +269,6 @@ class budgety{
                     
                     let fields = document.querySelectorAll(DOMstrings.expensesPercLabel);
 
-                    let nodeListForEach = function(list, callback){
-                        for(let i = 0; i < list.length; i++){
-                            callback(list[i], i);
-                        }
-                    };
-
                     nodeListForEach(fields, function(current, index){
                         
                         if(percentages[index] > 0){
@@ -294,6 +295,20 @@ class budgety{
                 
                 },
 
+                changedType: function(){
+
+                    let fields = document.querySelectorAll(
+                        DOMstrings.inputType + ',' +
+                        DOMstrings.inputDescription + ',' +
+                        DOMstrings.inputValue);
+
+                    nodeListForEach(fields, function(cur){
+                        cur.classList.toggle('red-focus');
+                    });
+
+                    document.querySelector(DOMstrings.inputButton).classList.toggle('red');
+                },
+
                 getDOMstrings: function(){
                     return DOMstrings;
                 }
@@ -317,6 +332,8 @@ class budgety{
            });
 
            document.querySelector(DOM.container).addEventListener('click', ctrlDeleteItem);
+
+           document.querySelector(DOM.inputType).addEventListener('change', UICtrl.changedType );
         };
 
 
