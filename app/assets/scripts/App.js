@@ -4,8 +4,8 @@ import 'bootstrap';
 
 
 
-import Copyright from "./modules/Copyright";
-import Budgety from "./modules/Budgety";
+import Copyright from "./views/Copyright";
+import Budgety from "./views/Budgety";
 
 
 let copyright = new Copyright();

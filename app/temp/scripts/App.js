@@ -94,15 +94,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var bootstrap__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2);
 /* harmony import */ var bootstrap__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(bootstrap__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _modules_Copyright__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(5);
-/* harmony import */ var _modules_Budgety__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(6);
+/* harmony import */ var _views_Copyright__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(5);
+/* harmony import */ var _views_Budgety__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(6);
 // jquery is used for bootstrap
 
 
 
 
-var copyright = new _modules_Copyright__WEBPACK_IMPORTED_MODULE_2__["default"]();
-var budgety = new _modules_Budgety__WEBPACK_IMPORTED_MODULE_3__["default"](); // Testing-comments
+var copyright = new _views_Copyright__WEBPACK_IMPORTED_MODULE_2__["default"]();
+var budgety = new _views_Budgety__WEBPACK_IMPORTED_MODULE_3__["default"](); // Testing-comments
 
 /***/ }),
 /* 1 */
