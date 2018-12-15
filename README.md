@@ -3,7 +3,7 @@
 Budgety - created with the help of Jonas Schmedtmann. I worked on my own template but didn't changed css, code. Because this project
 was more about javascript.
 
-Live version will be available as soon as a project is finished.
+[Live Version](https://arnasdickus.github.io/Budgety/)
 
 ## Getting Started
 
