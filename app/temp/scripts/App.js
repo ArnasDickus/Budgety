@@ -103,6 +103,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var copyright = new _views_Copyright__WEBPACK_IMPORTED_MODULE_2__["default"]();
 var budgety = new _views_Budgety__WEBPACK_IMPORTED_MODULE_3__["default"](); // Testing-comments
+// let globalApp = new GlobalApp();
 
 /***/ }),
 /* 1 */
