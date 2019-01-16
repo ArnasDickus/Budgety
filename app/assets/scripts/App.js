@@ -43,6 +43,18 @@ const ctrlAddItem = new CtrlAddItem;
 
 -------------------------------------------------------------------
 
+4) The hard part. After I submit. I want data to actually show up, in either
+inc tab or exp tab.
+
+    BUDGET CONTROLLER: DONE
+    1) Add logic behind inc or exp. 
+
+    UICONTROLLER: DONE
+    1) Create logic for displaying on screen. DONE. INJECTION ALLOWED WARNING
+    2) Export to App Controller 
+
+    APP CONTROLLLER:
+    1) Connect both of them.
 */
 
 

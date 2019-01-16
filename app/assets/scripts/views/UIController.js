@@ -21,3 +21,67 @@ export const getInput = {
     description:    document.querySelector(DOMstrings.inputDescription),
     value:          document.querySelector(DOMstrings.inputValue)
 };
+
+class UIController{
+    constructor(){
+        // Properties
+
+        // Methods
+        this.addListItem;
+    }
+    addListItem(object, type){
+        let html, newHtml, element;
+
+        if(type === 'inc'){
+            element = DOMstrings.incomeContainer;
+    
+    html = `<div class="item clearfix" id="inc-%id%">
+                <div class="item__description">
+                    %description%
+                </div> 
+                <div class="right clearfix">
+                    <div class="item__value">
+                        %value%
+                    </div> 
+                    <div class="item__delete"> 
+                        <button class="item__delete--btn">
+                            <i class="ion-ios-close-outline"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>`;
+        }else if (type === "exp"){
+                    element = DOMstrings.expensesContainer;
+    html =  `<div class="item clearfix" id="exp-%id%">
+                    <div class="item__description">
+                        %description%
+                    </div>
+                    <div class="right clearfix">
+                        <div class="item__value">
+                            %value%
+                        </div>
+                        <div class="item__percentage">
+                            %21%
+                        </div>
+                        <div class="item__delete">
+                            <button class="item__delete--btn">
+                                <i class="ion-ios-close-outline"></i>
+                            </button>
+                        </div>
+                    </div>
+            </div>`;   
+        }
+        // Replace the placeholder text with data
+        console.log("id = " + object.id);
+        console.log("description = " + object.description);
+        console.log("value = " + object.value);
+        newHtml = html.replace('%id%', object.id);
+        newHtml = newHtml.replace('%description%', object.description);
+        newHtml = newHtml.replace("%value%", object.value, type);
+
+         // Insert the HTML into the DOM
+        document.querySelector(element).insertAdjacentHTML('beforeend', newHtml);
+    }
+}
+
+export default UIController;

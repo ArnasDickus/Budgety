@@ -2,9 +2,12 @@
 
 
 import { DOMstrings, getInput } from "./views/UIController";
-import AddItem from "./models/budgetController"
-    
-    let addItem = new AddItem;
+import BudgetController from "./models/budgetController"
+import UIController from "./views/UIController";
+
+    let uiController = new UIController;
+    let budgetController = new BudgetController;
+
 class CtrlAddItem{
     constructor(){
         // Properties
@@ -16,10 +19,19 @@ class CtrlAddItem{
         this.addItem;
     }
         addItem(){
-            console.log("hello");
-            console.log(getInput.type.value);
-            console.log(getInput.description.value);
-            console.log(getInput.value.value);
+            let input, newItem;
+            
+  
+            // 1) Get the filed input data    
+            input = getInput;
+
+            if(input.description.value !== "" && !isNaN(input.value.value) && input.value.value > 0){
+                // 2. Add the item to the budget controller
+                newItem = budgetController.addItemMethod(input.type.value, input.description.value, input.value.value);
+
+                // Add the item to the UI
+                uiController.addListItem(newItem, input.type.value);
+            }
         }
 
 }

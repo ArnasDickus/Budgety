@@ -136,6 +136,18 @@ var ctrlAddItem = new _AppController__WEBPACK_IMPORTED_MODULE_2__["default"]();
 
 -------------------------------------------------------------------
 
+4) The hard part. After I submit. I want data to actually show up, in either
+inc tab or exp tab.
+
+    BUDGET CONTROLLER: DONE
+    1) Add logic behind inc or exp. 
+
+    UICONTROLLER: DONE
+    1) Create logic for displaying on screen. DONE. INJECTION ALLOWED WARNING
+    2) Export to App Controller 
+
+    APP CONTROLLLER:
+    1) Connect both of them.
 */
 
 /***/ }),
@@ -17041,7 +17053,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 
 
-var addItem = new _models_budgetController__WEBPACK_IMPORTED_MODULE_1__["default"]();
+
+var uiController = new _views_UIController__WEBPACK_IMPORTED_MODULE_0__["default"]();
+var budgetController = new _models_budgetController__WEBPACK_IMPORTED_MODULE_1__["default"]();
 
 var CtrlAddItem =
 /*#__PURE__*/
@@ -17059,10 +17073,16 @@ function () {
   _createClass(CtrlAddItem, [{
     key: "addItem",
     value: function addItem() {
-      console.log("hello");
-      console.log(_views_UIController__WEBPACK_IMPORTED_MODULE_0__["getInput"].type.value);
-      console.log(_views_UIController__WEBPACK_IMPORTED_MODULE_0__["getInput"].description.value);
-      console.log(_views_UIController__WEBPACK_IMPORTED_MODULE_0__["getInput"].value.value);
+      var input, newItem; // 1) Get the filed input data    
+
+      input = _views_UIController__WEBPACK_IMPORTED_MODULE_0__["getInput"];
+
+      if (input.description.value !== "" && !isNaN(input.value.value) && input.value.value > 0) {
+        // 2. Add the item to the budget controller
+        newItem = budgetController.addItemMethod(input.type.value, input.description.value, input.value.value); // Add the item to the UI
+
+        uiController.addListItem(newItem, input.type.value);
+      }
     }
   }]);
 
@@ -17079,6 +17099,12 @@ function () {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DOMstrings", function() { return DOMstrings; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getInput", function() { return getInput; });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
 var DOMstrings = {
   inputType: '.add__type',
   inputDescription: '.add__description',
@@ -17100,6 +17126,47 @@ var getInput = {
   value: document.querySelector(DOMstrings.inputValue)
 };
 
+var UIController =
+/*#__PURE__*/
+function () {
+  function UIController() {
+    _classCallCheck(this, UIController);
+
+    // Properties
+    // Methods
+    this.addListItem;
+  }
+
+  _createClass(UIController, [{
+    key: "addListItem",
+    value: function addListItem(object, type) {
+      var html, newHtml, element;
+
+      if (type === 'inc') {
+        element = DOMstrings.incomeContainer;
+        html = "<div class=\"item clearfix\" id=\"inc-%id%\">\n                <div class=\"item__description\">\n                    %description%\n                </div> \n                <div class=\"right clearfix\">\n                    <div class=\"item__value\">\n                        %value%\n                    </div> \n                    <div class=\"item__delete\"> \n                        <button class=\"item__delete--btn\">\n                            <i class=\"ion-ios-close-outline\"></i>\n                        </button>\n                    </div>\n                </div>\n            </div>";
+      } else if (type === "exp") {
+        element = DOMstrings.expensesContainer;
+        html = "<div class=\"item clearfix\" id=\"exp-%id%\">\n                    <div class=\"item__description\">\n                        %description%\n                    </div>\n                    <div class=\"right clearfix\">\n                        <div class=\"item__value\">\n                            %value%\n                        </div>\n                        <div class=\"item__percentage\">\n                            %21%\n                        </div>\n                        <div class=\"item__delete\">\n                            <button class=\"item__delete--btn\">\n                                <i class=\"ion-ios-close-outline\"></i>\n                            </button>\n                        </div>\n                    </div>\n            </div>";
+      } // Replace the placeholder text with data
+
+
+      console.log("id = " + object.id);
+      console.log("description = " + object.description);
+      console.log("value = " + object.value);
+      newHtml = html.replace('%id%', object.id);
+      newHtml = newHtml.replace('%description%', object.description);
+      newHtml = newHtml.replace("%value%", object.value, type); // Insert the HTML into the DOM
+
+      document.querySelector(element).insertAdjacentHTML('beforeend', newHtml);
+    }
+  }]);
+
+  return UIController;
+}();
+
+/* harmony default export */ __webpack_exports__["default"] = (UIController);
+
 /***/ }),
 /* 7 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -17112,25 +17179,42 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-var AddItem =
+var BudgetController =
 /*#__PURE__*/
 function () {
-  function AddItem() {
-    _classCallCheck(this, AddItem);
+  function BudgetController() {
+    _classCallCheck(this, BudgetController);
 
     // Properties
-    // Methods
-    this.events;
+    this.data = data; // Methods
+
+    this.addItemMethod;
   }
 
-  _createClass(AddItem, [{
-    key: "events",
-    value: function events() {
-      console.log("Budget Controller");
+  _createClass(BudgetController, [{
+    key: "addItemMethod",
+    value: function addItemMethod(type, description, value) {
+      var newItem, ID; // Create new id
+
+      if (data.allItems[type].length > 0) {
+        ID = data.allItems[type][data.allItems[type].length - 1].id + 1;
+      } else {
+        ID = 0;
+      }
+
+      if (type === "exp") {
+        newItem = new Expense(ID, description, value);
+      } else if (type === "inc") {
+        newItem = new Income(ID, description, value);
+      } // Push it into our data structure.
+
+
+      data.allItems[type].push(newItem);
+      return newItem;
     }
   }]);
 
-  return AddItem;
+  return BudgetController;
 }();
 
 var data = {
@@ -17160,10 +17244,9 @@ var Expense = function Expense(id, description, value) {
   this.id = id;
   this.description = description;
   this.value = value;
-  this.percentage = percentage;
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (AddItem);
+/* harmony default export */ __webpack_exports__["default"] = (BudgetController);
 
 /***/ })
 /******/ ]);
