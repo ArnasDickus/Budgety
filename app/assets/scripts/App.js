@@ -3,34 +3,50 @@ import $ from "jquery";
 import 'bootstrap';
 
 
-import AppController from "./AppController";
+import CtrlAddItem from "./AppController";
 
+const ctrlAddItem = new CtrlAddItem;
 
-let appController = new AppController;
+/*
+    What I want to happen?
+1) If I click button submit. console.log("hello"); COMPLETED
+    APP CONTROLLLER:
+        1) Create a class ctrlAddItem.
+        2) In that class receive from UI Controller.
 
+    BUDGET CONTROLLER:
+        1) Nothing.
+    UICONTROLLER:
+        1) Export UI classes to App Controller.
+---------------------------------------------------------------
 
-/* My Strategy
-If there is nothing to count use object.
-If there is something to count use classes.
+2) After I click the button I get description and value to console.log COMPLETED
+    UICONTROLLER:
+    1) 3 selectors add__type, add__description, add__value; 
+    they are always together. Put them into an object.
+    and export it into App.js
 
+    APP CONTROLLLER:
+    2) Console.log() Object.
+    BUDGET CONTROLLER:
 
-I have 3 controllers
-App Controller - Main controller
-UI Controller - User interface
-Budget Controller - all calculations
+----------------------------------------------------------------------
 
-1) I need to add event listener in app controller on add__btn. DONE
-2) I need to get input from UI Controller. DONE
-    add__type
-    add__description
-    add__value
-I think this should be an object, that I return to App Controller.
+3) I want to create data and classes in Budget controller. COMPLETED
 
-3) I need to calculate with addItem. 
-    Create a class AddItem - for something...
-    Create a class Expense - for calculating expenses. DONE
-    Create a class Income  - for calculating income. DONE
+    BUDGET CONTROLLER:
+    1) Create getInput data with addItem.
+    2) Create 2 classes.
+
+    APP CONTROLLLER:
+    1) Connect it with app controller
+
+-------------------------------------------------------------------
+
 */
+
+
+
 
 
 

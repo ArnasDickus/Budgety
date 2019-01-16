@@ -99,28 +99,43 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var appController = new _AppController__WEBPACK_IMPORTED_MODULE_2__["default"]();
-/* My Strategy
-If there is nothing to count use object.
-If there is something to count use classes.
+var ctrlAddItem = new _AppController__WEBPACK_IMPORTED_MODULE_2__["default"]();
+/*
+    What I want to happen?
+1) If I click button submit. console.log("hello"); COMPLETED
+    APP CONTROLLLER:
+        1) Create a class ctrlAddItem.
+        2) In that class receive from UI Controller.
 
+    BUDGET CONTROLLER:
+        1) Nothing.
+    UICONTROLLER:
+        1) Export UI classes to App Controller.
+---------------------------------------------------------------
 
-I have 3 controllers
-App Controller - Main controller
-UI Controller - User interface
-Budget Controller - all calculations
+2) After I click the button I get description and value to console.log COMPLETED
+    UICONTROLLER:
+    1) 3 selectors add__type, add__description, add__value; 
+    they are always together. Put them into an object.
+    and export it into App.js
 
-1) I need to add event listener in app controller on add__btn. DONE
-2) I need to get input from UI Controller. DONE
-    add__type
-    add__description
-    add__value
-I think this should be an object, that I return to App Controller.
+    APP CONTROLLLER:
+    2) Console.log() Object.
+    BUDGET CONTROLLER:
 
-3) I need to calculate with addItem. 
-    Create a class AddItem - for something...
-    Create a class Expense - for calculating expenses. DONE
-    Create a class Income  - for calculating income. DONE
+----------------------------------------------------------------------
+
+3) I want to create data and classes in Budget controller. COMPLETED
+
+    BUDGET CONTROLLER:
+    1) Create getInput data with addItem.
+    2) Create 2 classes.
+
+    APP CONTROLLLER:
+    1) Connect it with app controller
+
+-------------------------------------------------------------------
+
 */
 
 /***/ }),
@@ -17017,6 +17032,7 @@ module.exports = g;
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _views_UIController__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+/* harmony import */ var _models_budgetController__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7);
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -17025,41 +17041,35 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 
 
-var ctrlAddItem =
+var addItem = new _models_budgetController__WEBPACK_IMPORTED_MODULE_1__["default"]();
+
+var CtrlAddItem =
 /*#__PURE__*/
 function () {
-  function ctrlAddItem() {
-    var _this = this;
-
-    _classCallCheck(this, ctrlAddItem);
+  function CtrlAddItem() {
+    _classCallCheck(this, CtrlAddItem);
 
     // Properties
-    this.addBtn = document.querySelector(_views_UIController__WEBPACK_IMPORTED_MODULE_0__["DOMStrings"].addBtn); // Methods
+    this.addBtn = document.querySelector(_views_UIController__WEBPACK_IMPORTED_MODULE_0__["DOMstrings"].inputButton); // Methods
 
-    this.events();
-    this.addBtn.addEventListener('click', function (event) {
-      return _this.AddItem(event);
-    });
+    this.addBtn.addEventListener('click', this.addItem);
+    this.addItem;
   }
 
-  _createClass(ctrlAddItem, [{
-    key: "events",
-    value: function events() {}
-  }, {
-    key: "AddItem",
-    value: function AddItem() {
+  _createClass(CtrlAddItem, [{
+    key: "addItem",
+    value: function addItem() {
+      console.log("hello");
       console.log(_views_UIController__WEBPACK_IMPORTED_MODULE_0__["getInput"].type.value);
       console.log(_views_UIController__WEBPACK_IMPORTED_MODULE_0__["getInput"].description.value);
       console.log(_views_UIController__WEBPACK_IMPORTED_MODULE_0__["getInput"].value.value);
-      console.log("click");
-      console.log(_views_UIController__WEBPACK_IMPORTED_MODULE_0__["getInput"]);
     }
   }]);
 
-  return ctrlAddItem;
+  return CtrlAddItem;
 }();
 
-/* harmony default export */ __webpack_exports__["default"] = (ctrlAddItem);
+/* harmony default export */ __webpack_exports__["default"] = (CtrlAddItem);
 
 /***/ }),
 /* 6 */
@@ -17067,16 +17077,13 @@ function () {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DOMStrings", function() { return DOMStrings; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DOMstrings", function() { return DOMstrings; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getInput", function() { return getInput; });
-/*
-1) Get inputs from description and value and export it to App Controller. 
-*/
-var DOMStrings = {
-  addType: '.add__type',
-  addDescription: '.add__description',
-  addValue: '.add__value',
-  addBtn: '.add__btn',
+var DOMstrings = {
+  inputType: '.add__type',
+  inputDescription: '.add__description',
+  inputValue: '.add__value',
+  inputButton: '.add__btn',
   incomeContainer: '.income__list',
   expensesContainer: '.expenses__list',
   budgetLabel: '.budget__value',
@@ -17088,10 +17095,75 @@ var DOMStrings = {
   dateLabel: '.budget__title--month'
 };
 var getInput = {
-  type: document.querySelector(DOMStrings.addType),
-  description: document.querySelector(DOMStrings.addDescription),
-  value: document.querySelector(DOMStrings.addValue)
+  type: document.querySelector(DOMstrings.inputType),
+  description: document.querySelector(DOMstrings.inputDescription),
+  value: document.querySelector(DOMstrings.inputValue)
 };
+
+/***/ }),
+/* 7 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var AddItem =
+/*#__PURE__*/
+function () {
+  function AddItem() {
+    _classCallCheck(this, AddItem);
+
+    // Properties
+    // Methods
+    this.events;
+  }
+
+  _createClass(AddItem, [{
+    key: "events",
+    value: function events() {
+      console.log("Budget Controller");
+    }
+  }]);
+
+  return AddItem;
+}();
+
+var data = {
+  allItems: {
+    exp: [],
+    inc: []
+  },
+  totals: {
+    exp: 0,
+    inc: 0
+  },
+  budget: 0,
+  percentage: -1
+};
+
+var Income = function Income(id, description, value) {
+  _classCallCheck(this, Income);
+
+  this.id = id;
+  this.description = description;
+  this.value = value;
+};
+
+var Expense = function Expense(id, description, value) {
+  _classCallCheck(this, Expense);
+
+  this.id = id;
+  this.description = description;
+  this.value = value;
+  this.percentage = percentage;
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (AddItem);
 
 /***/ })
 /******/ ]);

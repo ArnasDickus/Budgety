@@ -1,36 +1,50 @@
 
-// ES6 IIFE function
 
-class addItem{
+
+class AddItem{
     constructor(){
-        
-    }
-}
-
-class income{
-    constructor(id, description, value){
         // Properties
-        this.id = id;
-        this.description = description;
-        this.value = value;
 
-        // Methods.
-   
+        // Methods
+        this.events;
+    }
+    events(){
+        console.log("Budget Controller");
     }
 }
-class expense{
+
+
+
+
+let data = {
+    allItems: {
+        exp: [],
+        inc: []
+    },
+    totals: {
+        exp: 0,
+        inc: 0
+    },
+    budget: 0,
+    percentage: -1
+}
+
+
+class Income {
     constructor(id, description, value){
-        // Properties
-        this.id = id;
+        this.id          = id;
         this.description = description;
-        this.value = value;
-        this.percentage = -1;
-
-        // Methods.
-
+        this.value       = value;
     }
 }
 
+class Expense{
+    constructor(id, description, value){
+        this.id          = id;
+        this.description = description;
+        this.value       = value;
+        this.percentage  = percentage;
+    }
+}
 
-
-
+export default AddItem;

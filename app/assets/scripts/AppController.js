@@ -1,30 +1,27 @@
 
-import { DOMStrings, getInput } from "./views/UIController";
 
 
-    class ctrlAddItem{
-        constructor(){
+import { DOMstrings, getInput } from "./views/UIController";
+import AddItem from "./models/budgetController"
+    
+    let addItem = new AddItem;
+class CtrlAddItem{
+    constructor(){
         // Properties
-        this.addBtn = document.querySelector(DOMStrings.addBtn);
-        
-        
+        this.addBtn = document.querySelector(DOMstrings.inputButton);
+       
+
         // Methods
-        this.events();
-        this.addBtn.addEventListener('click', event => this.AddItem(event));
-
-
-
-        }
-        events(){
-     
-        }
-        AddItem(){
-            console.log(getInput.type.value)
-            console.log(getInput.description.value)
-            console.log(getInput.value.value);
-            console.log("click");
-            console.log(getInput);
-        }
+        this.addBtn.addEventListener('click', this.addItem);
+        this.addItem;
     }
+        addItem(){
+            console.log("hello");
+            console.log(getInput.type.value);
+            console.log(getInput.description.value);
+            console.log(getInput.value.value);
+        }
 
-export default ctrlAddItem;
+}
+
+export default CtrlAddItem;
