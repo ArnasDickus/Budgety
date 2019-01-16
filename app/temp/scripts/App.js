@@ -17068,7 +17068,8 @@ function () {
 
     this.addBtn.addEventListener('click', this.addItem);
     this.addItem;
-  }
+  } // Adds item to INCOME or EXPENSES
+
 
   _createClass(CtrlAddItem, [{
     key: "addItem",
@@ -17081,7 +17082,10 @@ function () {
         // 2. Add the item to the budget controller
         newItem = budgetController.addItemMethod(input.type.value, input.description.value, input.value.value); // Add the item to the UI
 
-        uiController.addListItem(newItem, input.type.value);
+        uiController.addListItem(newItem, input.type.value); // Clear fields
+
+        input.description.value = "";
+        input.value.value = "";
       }
     }
   }]);
@@ -17151,9 +17155,6 @@ function () {
       } // Replace the placeholder text with data
 
 
-      console.log("id = " + object.id);
-      console.log("description = " + object.description);
-      console.log("value = " + object.value);
       newHtml = html.replace('%id%', object.id);
       newHtml = newHtml.replace('%description%', object.description);
       newHtml = newHtml.replace("%value%", object.value, type); // Insert the HTML into the DOM

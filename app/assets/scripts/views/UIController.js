@@ -72,9 +72,6 @@ class UIController{
             </div>`;   
         }
         // Replace the placeholder text with data
-        console.log("id = " + object.id);
-        console.log("description = " + object.description);
-        console.log("value = " + object.value);
         newHtml = html.replace('%id%', object.id);
         newHtml = newHtml.replace('%description%', object.description);
         newHtml = newHtml.replace("%value%", object.value, type);

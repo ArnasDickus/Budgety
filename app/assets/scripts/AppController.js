@@ -18,6 +18,7 @@ class CtrlAddItem{
         this.addBtn.addEventListener('click', this.addItem);
         this.addItem;
     }
+        // Adds item to INCOME or EXPENSES
         addItem(){
             let input, newItem;
             
@@ -31,6 +32,12 @@ class CtrlAddItem{
 
                 // Add the item to the UI
                 uiController.addListItem(newItem, input.type.value);
+
+                // Clear fields
+                input.description.value = "";
+                input.value.value = "";
+
+
             }
         }
 
