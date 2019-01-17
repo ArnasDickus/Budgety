@@ -1,5 +1,5 @@
 
-
+// All html values.
 export const DOMstrings = {
     inputType:          '.add__type',
     inputDescription:   '.add__description',
@@ -28,7 +28,10 @@ class UIController{
 
         // Methods
         this.addListItem;
+        this.displayBudget;
+        this.formatNumber;
     }
+    // add List item to income or expense
     addListItem(object, type){
         let html, newHtml, element;
 
@@ -79,6 +82,35 @@ class UIController{
          // Insert the HTML into the DOM
         document.querySelector(element).insertAdjacentHTML('beforeend', newHtml);
     }
+    // Display budget on screen
+    displayBudget(obj){
+        let type;
+        if(obj.budget > 0){
+            type = 'inc';
+        }else{
+            type = 'exp';
+        };
+        document.querySelector(DOMstrings.budgetLabel).textContent = this.formatNumber(obj.budget, type);
+        document.querySelector(DOMstrings.incomeLabel).textContent = this.formatNumber(obj.totalInc, 'inc');
+        document.querySelector(DOMstrings.expensesLabel).textContent = this.formatNumber(obj.totalExp, 'exp');
+    }
+    // Format numbers on screen.
+    formatNumber(number, type){
+        let numberSplit, integer, decimal;
+
+        number = Math.abs(number);
+        number = number.toFixed(2);
+
+        numberSplit = number.split('.');
+        integer = numberSplit[0];
+        if(integer.length > 3){
+            integer = int.substr(0, int.length - 3) + ',' 
+            + int.substr(int.length - 3, 3);
+        }
+        decimal = numberSplit[1];
+        return (type === 'exp' ? '-' : '+') + ' ' + integer + '.' + decimal;
+    }
+    
 }
 
 export default UIController;

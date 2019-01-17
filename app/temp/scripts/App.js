@@ -148,6 +148,19 @@ inc tab or exp tab.
 
     APP CONTROLLLER:
     1) Connect both of them.
+
+-----------------------------------------------------------------------------
+5) updateBudget: DONE
+
+    BUDGET CONTROLLER: DONE
+    1) Calculate budget
+    2) Calculate total budget
+
+    UICONTROLLER:
+    1) display budget
+
+    APP CONTROLLLER:
+    1) Connect both of them.
 */
 
 /***/ }),
@@ -17061,17 +17074,27 @@ var CtrlAddItem =
 /*#__PURE__*/
 function () {
   function CtrlAddItem() {
+    var _this = this;
+
     _classCallCheck(this, CtrlAddItem);
 
     // Properties
     this.addBtn = document.querySelector(_views_UIController__WEBPACK_IMPORTED_MODULE_0__["DOMstrings"].inputButton); // Methods
 
-    this.addBtn.addEventListener('click', this.addItem);
+    this.addBtn.addEventListener('click', function () {
+      return _this.addItem();
+    });
     this.addItem;
-  } // Adds item to INCOME or EXPENSES
+    this.updateBudget;
+    this.events();
+  } // For testing purposes
 
 
   _createClass(CtrlAddItem, [{
+    key: "events",
+    value: function events() {} // Click a addBtn button.
+
+  }, {
     key: "addItem",
     value: function addItem() {
       var input, newItem; // 1) Get the filed input data    
@@ -17079,14 +17102,28 @@ function () {
       input = _views_UIController__WEBPACK_IMPORTED_MODULE_0__["getInput"];
 
       if (input.description.value !== "" && !isNaN(input.value.value) && input.value.value > 0) {
-        // 2. Add the item to the budget controller
-        newItem = budgetController.addItemMethod(input.type.value, input.description.value, input.value.value); // Add the item to the UI
+        // 2) Add the item to the budget controller
+        newItem = budgetController.addItemMethod(input.type.value, input.description.value, input.value.value); // 3) Add the item to the UI
 
-        uiController.addListItem(newItem, input.type.value); // Clear fields
-
+        uiController.addListItem(newItem, input.type.value);
         input.description.value = "";
-        input.value.value = "";
+        input.value.value = ""; // Update budget screen
+
+        this.updateBudget();
+        console.log(this);
       }
+
+      console.log(budgetController.calculateBudget());
+    } // Update budget changes on the top.
+
+  }, {
+    key: "updateBudget",
+    value: function updateBudget() {
+      var budget; // Calculate budget
+
+      budget = budgetController.calculateBudget(); // Display budget on screen
+
+      uiController.displayBudget(budget);
     }
   }]);
 
@@ -17109,6 +17146,7 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
+// All html values.
 var DOMstrings = {
   inputType: '.add__type',
   inputDescription: '.add__description',
@@ -17139,7 +17177,10 @@ function () {
     // Properties
     // Methods
     this.addListItem;
-  }
+    this.displayBudget;
+    this.formatNumber;
+  } // add List item to income or expense
+
 
   _createClass(UIController, [{
     key: "addListItem",
@@ -17160,6 +17201,40 @@ function () {
       newHtml = newHtml.replace("%value%", object.value, type); // Insert the HTML into the DOM
 
       document.querySelector(element).insertAdjacentHTML('beforeend', newHtml);
+    } // Display budget on screen
+
+  }, {
+    key: "displayBudget",
+    value: function displayBudget(obj) {
+      var type;
+
+      if (obj.budget > 0) {
+        type = 'inc';
+      } else {
+        type = 'exp';
+      }
+
+      ;
+      document.querySelector(DOMstrings.budgetLabel).textContent = this.formatNumber(obj.budget, type);
+      document.querySelector(DOMstrings.incomeLabel).textContent = this.formatNumber(obj.totalInc, 'inc');
+      document.querySelector(DOMstrings.expensesLabel).textContent = this.formatNumber(obj.totalExp, 'exp');
+    } // Format numbers on screen.
+
+  }, {
+    key: "formatNumber",
+    value: function formatNumber(number, type) {
+      var numberSplit, integer, decimal;
+      number = Math.abs(number);
+      number = number.toFixed(2);
+      numberSplit = number.split('.');
+      integer = numberSplit[0];
+
+      if (integer.length > 3) {
+        integer = int.substr(0, int.length - 3) + ',' + int.substr(int.length - 3, 3);
+      }
+
+      decimal = numberSplit[1];
+      return (type === 'exp' ? '-' : '+') + ' ' + integer + '.' + decimal;
     }
   }]);
 
@@ -17180,6 +17255,19 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
+var data = {
+  allItems: {
+    exp: [],
+    inc: []
+  },
+  totals: {
+    exp: 0,
+    inc: 0
+  },
+  budget: 0,
+  percentage: -1
+};
+
 var BudgetController =
 /*#__PURE__*/
 function () {
@@ -17190,7 +17278,10 @@ function () {
     this.data = data; // Methods
 
     this.addItemMethod;
-  }
+    this.calculateTotal;
+    this.calculateBudget;
+  } // Adds item that is either income or expense.
+
 
   _createClass(BudgetController, [{
     key: "addItemMethod",
@@ -17212,24 +17303,36 @@ function () {
 
       data.allItems[type].push(newItem);
       return newItem;
+    } // Calculates entire budget (income - expenses)
+
+  }, {
+    key: "calculateBudget",
+    value: function calculateBudget() {
+      // Fetches income
+      this.calculateTotal('exp');
+      this.calculateTotal('inc');
+      data.budget = data.totals.inc - data.totals.exp; // Return results for AppController
+
+      return {
+        budget: data.budget,
+        totalInc: data.totals.inc,
+        totalExp: data.totals.exp
+      };
+    } // Calculates either income or expenses.
+
+  }, {
+    key: "calculateTotal",
+    value: function calculateTotal(type) {
+      var sum = 0;
+      data.allItems[type].forEach(function (current) {
+        sum = +sum + current.value;
+      });
+      data.totals[type] = sum;
     }
   }]);
 
   return BudgetController;
 }();
-
-var data = {
-  allItems: {
-    exp: [],
-    inc: []
-  },
-  totals: {
-    exp: 0,
-    inc: 0
-  },
-  budget: 0,
-  percentage: -1
-};
 
 var Income = function Income(id, description, value) {
   _classCallCheck(this, Income);

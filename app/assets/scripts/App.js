@@ -55,6 +55,19 @@ inc tab or exp tab.
 
     APP CONTROLLLER:
     1) Connect both of them.
+
+-----------------------------------------------------------------------------
+5) updateBudget: DONE
+
+    BUDGET CONTROLLER: DONE
+    1) Calculate budget
+    2) Calculate total budget
+
+    UICONTROLLER:
+    1) display budget
+
+    APP CONTROLLLER:
+    1) Connect both of them.
 */
 
 

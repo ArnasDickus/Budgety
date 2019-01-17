@@ -15,32 +15,49 @@ class CtrlAddItem{
        
 
         // Methods
-        this.addBtn.addEventListener('click', this.addItem);
+        this.addBtn.addEventListener('click', () => this.addItem());
         this.addItem;
+        this.updateBudget;
+        this.events();
     }
-        // Adds item to INCOME or EXPENSES
+        // For testing purposes
+        events(){
+         
+             
+           
+        }
+        // Click a addBtn button.
         addItem(){
             let input, newItem;
             
-  
             // 1) Get the filed input data    
             input = getInput;
 
             if(input.description.value !== "" && !isNaN(input.value.value) && input.value.value > 0){
-                // 2. Add the item to the budget controller
+                // 2) Add the item to the budget controller
                 newItem = budgetController.addItemMethod(input.type.value, input.description.value, input.value.value);
 
-                // Add the item to the UI
+                // 3) Add the item to the UI
                 uiController.addListItem(newItem, input.type.value);
 
-                // Clear fields
                 input.description.value = "";
                 input.value.value = "";
 
-
+                // Update budget screen
+                this.updateBudget();
+                console.log(this);
             }
+            console.log(budgetController.calculateBudget());
         }
+        // Update budget changes on the top.
+        updateBudget(){
+            let budget;
+            // Calculate budget
+           budget = budgetController.calculateBudget();
 
+            // Display budget on screen
+            uiController.displayBudget(budget);
+        }
 }
 
 export default CtrlAddItem;
