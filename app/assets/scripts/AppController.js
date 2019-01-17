@@ -11,20 +11,21 @@ import UIController from "./views/UIController";
 class CtrlAddItem{
     constructor(){
         // Properties
-        this.addBtn = document.querySelector(DOMstrings.inputButton);
+        this.addBtn     = document.querySelector(DOMstrings.inputButton);
+        this.deleteBtn  = document.querySelector(DOMstrings.container);
+
        
 
         // Methods
         this.addBtn.addEventListener('click', () => this.addItem());
+        this.deleteBtn.addEventListener('click', (event) => this.deleteItem(event));
         this.addItem;
         this.updateBudget;
         this.events();
     }
         // For testing purposes
         events(){
-         
-             
-           
+               
         }
         // Click a addBtn button.
         addItem(){
@@ -45,9 +46,7 @@ class CtrlAddItem{
 
                 // Update budget screen
                 this.updateBudget();
-                console.log(this);
             }
-            console.log(budgetController.calculateBudget());
         }
         // Update budget changes on the top.
         updateBudget(){
@@ -57,6 +56,27 @@ class CtrlAddItem{
 
             // Display budget on screen
             uiController.displayBudget(budget);
+        }
+        // Deletes selected list item
+        deleteItem(event){
+            let itemID, splitID, type, ID;
+
+            // Targeting delete__item node 
+           itemID = event.target.parentNode.parentNode.parentNode.parentNode.id;
+            if(itemID){
+                splitID = itemID.split('-');
+                type = splitID[0];
+                ID = parseInt (splitID[1]);
+
+                // Delete item from the data structure.
+                budgetController.deleteItem(type, ID);
+
+                // Delete item from the UI
+                uiController.deleteListItem(itemID);
+
+                // Update Budget
+                this.updateBudget();
+            }
         }
 }
 

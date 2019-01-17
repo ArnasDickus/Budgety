@@ -68,6 +68,17 @@ inc tab or exp tab.
 
     APP CONTROLLLER:
     1) Connect both of them.
+
+
+---------------------------------------------------------------------------------
+6) deleteItems:
+    BUDGET CONTROLLER:
+    1) remove that data
+    UICONTROLLER:
+    1) Remove UI list
+    APP CONTROLLLER:
+    1) Select delete button. Can't select it easily because it dosen't exist
+    2)
 */
 
 

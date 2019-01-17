@@ -30,6 +30,7 @@ class UIController{
         this.addListItem;
         this.displayBudget;
         this.formatNumber;
+        this.deleteListItem;
     }
     // add List item to income or expense
     addListItem(object, type){
@@ -93,6 +94,11 @@ class UIController{
         document.querySelector(DOMstrings.budgetLabel).textContent = this.formatNumber(obj.budget, type);
         document.querySelector(DOMstrings.incomeLabel).textContent = this.formatNumber(obj.totalInc, 'inc');
         document.querySelector(DOMstrings.expensesLabel).textContent = this.formatNumber(obj.totalExp, 'exp');
+    }
+    // Deletes selected list item.
+    deleteListItem(selectorID){
+        let el = document.getElementById(selectorID);
+        el.parentNode.removeChild(el);
     }
     // Format numbers on screen.
     formatNumber(number, type){

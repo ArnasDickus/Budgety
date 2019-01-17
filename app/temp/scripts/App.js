@@ -161,6 +161,17 @@ inc tab or exp tab.
 
     APP CONTROLLLER:
     1) Connect both of them.
+
+
+---------------------------------------------------------------------------------
+6) deleteItems:
+    BUDGET CONTROLLER:
+    1) remove that data
+    UICONTROLLER:
+    1) Remove UI list
+    APP CONTROLLLER:
+    1) Select delete button. Can't select it easily because it dosen't exist
+    2)
 */
 
 /***/ }),
@@ -17079,10 +17090,14 @@ function () {
     _classCallCheck(this, CtrlAddItem);
 
     // Properties
-    this.addBtn = document.querySelector(_views_UIController__WEBPACK_IMPORTED_MODULE_0__["DOMstrings"].inputButton); // Methods
+    this.addBtn = document.querySelector(_views_UIController__WEBPACK_IMPORTED_MODULE_0__["DOMstrings"].inputButton);
+    this.deleteBtn = document.querySelector(_views_UIController__WEBPACK_IMPORTED_MODULE_0__["DOMstrings"].container); // Methods
 
     this.addBtn.addEventListener('click', function () {
       return _this.addItem();
+    });
+    this.deleteBtn.addEventListener('click', function (event) {
+      return _this.deleteItem(event);
     });
     this.addItem;
     this.updateBudget;
@@ -17110,10 +17125,7 @@ function () {
         input.value.value = ""; // Update budget screen
 
         this.updateBudget();
-        console.log(this);
       }
-
-      console.log(budgetController.calculateBudget());
     } // Update budget changes on the top.
 
   }, {
@@ -17124,6 +17136,26 @@ function () {
       budget = budgetController.calculateBudget(); // Display budget on screen
 
       uiController.displayBudget(budget);
+    } // Deletes selected list item
+
+  }, {
+    key: "deleteItem",
+    value: function deleteItem(event) {
+      var itemID, splitID, type, ID; // Targeting delete__item node 
+
+      itemID = event.target.parentNode.parentNode.parentNode.parentNode.id;
+
+      if (itemID) {
+        splitID = itemID.split('-');
+        type = splitID[0];
+        ID = parseInt(splitID[1]); // Delete item from the data structure.
+
+        budgetController.deleteItem(type, ID); // Delete item from the UI
+
+        uiController.deleteListItem(itemID); // Update Budget
+
+        this.updateBudget();
+      }
     }
   }]);
 
@@ -17179,6 +17211,7 @@ function () {
     this.addListItem;
     this.displayBudget;
     this.formatNumber;
+    this.deleteListItem;
   } // add List item to income or expense
 
 
@@ -17218,6 +17251,13 @@ function () {
       document.querySelector(DOMstrings.budgetLabel).textContent = this.formatNumber(obj.budget, type);
       document.querySelector(DOMstrings.incomeLabel).textContent = this.formatNumber(obj.totalInc, 'inc');
       document.querySelector(DOMstrings.expensesLabel).textContent = this.formatNumber(obj.totalExp, 'exp');
+    } // Deletes selected list item.
+
+  }, {
+    key: "deleteListItem",
+    value: function deleteListItem(selectorID) {
+      var el = document.getElementById(selectorID);
+      el.parentNode.removeChild(el);
     } // Format numbers on screen.
 
   }, {
@@ -17280,6 +17320,7 @@ function () {
     this.addItemMethod;
     this.calculateTotal;
     this.calculateBudget;
+    this.deleteItem;
   } // Adds item that is either income or expense.
 
 
@@ -17328,6 +17369,22 @@ function () {
         sum = +sum + current.value;
       });
       data.totals[type] = sum;
+    } // Delete item from the data structure
+
+  }, {
+    key: "deleteItem",
+    value: function deleteItem(type, id) {
+      var ids, index;
+      ids = data.allItems[type].map(function (current) {
+        return current.id;
+      });
+      index = ids.indexOf(id);
+
+      if (index !== -1) {
+        data.allItems[type].splice(index, 1);
+      }
+
+      ;
     }
   }]);
 

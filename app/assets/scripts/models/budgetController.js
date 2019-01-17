@@ -22,11 +22,12 @@ class BudgetController{
         this.addItemMethod;
         this.calculateTotal;
         this.calculateBudget;
+        this.deleteItem;
     }
     // Adds item that is either income or expense.
     addItemMethod(type, description, value){
         let newItem, ID;
-
+        
         // Create new id
         if(data.allItems[type].length > 0) {
             ID = data.allItems[type][data.allItems[type].length - 1].id + 1;
@@ -66,6 +67,19 @@ class BudgetController{
         });
         data.totals[type] = sum;
     }
+    // Delete item from the data structure
+    deleteItem(type, id){
+        let ids, index;
+
+        ids = data.allItems[type].map(function(current){
+            return current.id;
+        });
+        
+        index = ids.indexOf(id);
+        if(index !== -1){
+            data.allItems[type].splice(index, 1);
+        };
+    };
 }
 
 class Income {
