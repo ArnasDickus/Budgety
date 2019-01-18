@@ -31,6 +31,7 @@ class UIController{
         this.displayBudget;
         this.formatNumber;
         this.deleteListItem;
+        this.displayMonth;
     }
     // add List item to income or expense
     addListItem(object, type){
@@ -110,11 +111,23 @@ class UIController{
         numberSplit = number.split('.');
         integer = numberSplit[0];
         if(integer.length > 3){
-            integer = int.substr(0, int.length - 3) + ',' 
-            + int.substr(int.length - 3, 3);
+            integer = integer.substr(0, integer.length - 3) + ',' 
+            + integer.substr(integer.length - 3, 3);
         }
         decimal = numberSplit[1];
         return (type === 'exp' ? '-' : '+') + ' ' + integer + '.' + decimal;
+    }
+    displayMonth(){
+        let now, months, month, year;
+
+        now = new Date();
+        
+        months = ['January', 'February', 'March', 'April', 'May', 'June', 'July',
+                    'August', 'September', 'October', 'November', 'December'];
+                    month = now.getMonth();
+
+                    year = now.getFullYear();
+                    document.querySelector(DOMstrings.dateLabel).textContent = months[month] + ' ' + year;
     }
     
 }

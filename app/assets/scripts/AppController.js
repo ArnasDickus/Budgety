@@ -21,11 +21,11 @@ class CtrlAddItem{
         this.deleteBtn.addEventListener('click', (event) => this.deleteItem(event));
         this.addItem;
         this.updateBudget;
-        this.events();
+        this.init();
     }
-        // For testing purposes
-        events(){
-               
+        // On startup.
+        init(){
+        uiController.displayMonth();
         }
         // Click a addBtn button.
         addItem(){
