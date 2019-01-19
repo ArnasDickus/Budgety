@@ -50,7 +50,7 @@ class UIController{
                     </div> 
                     <div class="item__delete"> 
                         <button class="item__delete--btn">
-                            <i class="ion-ios-close-outline"></i>
+                            <i class="far fa-times-circle"></i>
                         </button>
                     </div>
                 </div>
@@ -70,7 +70,7 @@ class UIController{
                         </div>
                         <div class="item__delete">
                             <button class="item__delete--btn">
-                                <i class="ion-ios-close-outline"></i>
+                                <i class="far fa-times-circle"></i>
                             </button>
                         </div>
                     </div>
