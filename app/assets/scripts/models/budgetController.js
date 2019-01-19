@@ -75,7 +75,7 @@ class BudgetController{
     calculateTotal(type){
         let sum = 0;
         data.allItems[type].forEach(function(current){
-            sum =+ sum + current.value;
+            sum =+ current.value;
         });
         data.totals[type] = sum;
     }

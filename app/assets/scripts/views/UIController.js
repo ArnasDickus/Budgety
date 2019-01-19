@@ -66,7 +66,7 @@ class UIController{
                             %value%
                         </div>
                         <div class="item__percentage">
-                            %21%
+                            
                         </div>
                         <div class="item__delete">
                             <button class="item__delete--btn">
@@ -92,9 +92,10 @@ class UIController{
         }else{
             type = 'exp';
         };
-        document.querySelector(DOMstrings.budgetLabel).textContent = this.formatNumber(obj.budget, type);
-        document.querySelector(DOMstrings.incomeLabel).textContent = this.formatNumber(obj.totalInc, 'inc');
-        document.querySelector(DOMstrings.expensesLabel).textContent = this.formatNumber(obj.totalExp, 'exp');
+            document.querySelector(DOMstrings.budgetLabel).textContent = this.formatNumber(obj.budget, type);
+            document.querySelector(DOMstrings.incomeLabel).textContent = this.formatNumber(obj.totalInc, 'inc');
+            document.querySelector(DOMstrings.expensesLabel).textContent = this.formatNumber(obj.totalExp, 'exp');
+
     }
     // Deletes selected list item.
     deleteListItem(selectorID){
@@ -111,8 +112,7 @@ class UIController{
         numberSplit = number.split('.');
         integer = numberSplit[0];
         if(integer.length > 3){
-            integer = integer.substr(0, integer.length - 3) + ',' 
-            + integer.substr(integer.length - 3, 3);
+            integer = integer.substr(0, integer.length - 3) + ',' + integer.substr(integer.length - 3, 3);
         }
         decimal = numberSplit[1];
         return (type === 'exp' ? '-' : '+') + ' ' + integer + '.' + decimal;

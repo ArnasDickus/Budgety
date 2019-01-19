@@ -17122,8 +17122,7 @@ function () {
 
       if (input.description.value !== "" && !isNaN(input.value.value) && input.value.value > 0) {
         // 2) Add the item to the budget controller
-        newItem = budgetController.addItemMethod(input.type.value, input.description.value, input.value.value);
-        console.log(newItem); // 3) Add the item to the UI
+        newItem = budgetController.addItemMethod(input.type.value, input.description.value, input.value.value); // 3) Add the item to the UI
 
         uiController.addListItem(newItem, input.type.value);
         input.description.value = "";
@@ -17169,7 +17168,7 @@ function () {
   }, {
     key: "loadData",
     value: function loadData() {
-      var storedData, newIncItem, newExpItem, budget; // Load data from local storage
+      var storedData, newIncItem, newExpItem; // Load data from local storage
 
       storedData = budgetController.getStoredData();
 
@@ -17259,7 +17258,7 @@ function () {
         html = "<div class=\"item clearfix\" id=\"inc-%id%\">\n                <div class=\"item__description\">\n                    %description%\n                </div> \n                <div class=\"right clearfix\">\n                    <div class=\"item__value\">\n                        %value%\n                    </div> \n                    <div class=\"item__delete\"> \n                        <button class=\"item__delete--btn\">\n                            <i class=\"ion-ios-close-outline\"></i>\n                        </button>\n                    </div>\n                </div>\n            </div>";
       } else if (type === "exp") {
         element = DOMstrings.expensesContainer;
-        html = "<div class=\"item clearfix\" id=\"exp-%id%\">\n                    <div class=\"item__description\">\n                        %description%\n                    </div>\n                    <div class=\"right clearfix\">\n                        <div class=\"item__value\">\n                            %value%\n                        </div>\n                        <div class=\"item__percentage\">\n                            %21%\n                        </div>\n                        <div class=\"item__delete\">\n                            <button class=\"item__delete--btn\">\n                                <i class=\"ion-ios-close-outline\"></i>\n                            </button>\n                        </div>\n                    </div>\n            </div>";
+        html = "<div class=\"item clearfix\" id=\"exp-%id%\">\n                    <div class=\"item__description\">\n                        %description%\n                    </div>\n                    <div class=\"right clearfix\">\n                        <div class=\"item__value\">\n                            %value%\n                        </div>\n                        <div class=\"item__percentage\">\n                            \n                        </div>\n                        <div class=\"item__delete\">\n                            <button class=\"item__delete--btn\">\n                                <i class=\"ion-ios-close-outline\"></i>\n                            </button>\n                        </div>\n                    </div>\n            </div>";
       } // Replace the placeholder text with data
 
 
@@ -17416,7 +17415,7 @@ function () {
     value: function calculateTotal(type) {
       var sum = 0;
       data.allItems[type].forEach(function (current) {
-        sum = +sum + current.value;
+        sum = +current.value;
       });
       data.totals[type] = sum;
     } // Delete item from the data structure

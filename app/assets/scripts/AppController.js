@@ -39,8 +39,6 @@ class CtrlAddItem{
             if(input.description.value !== "" && !isNaN(input.value.value) && input.value.value > 0){
                 // 2) Add the item to the budget controller
                 newItem = budgetController.addItemMethod(input.type.value, input.description.value, input.value.value);
-                console.log(newItem);
-
                 // 3) Add the item to the UI
                 uiController.addListItem(newItem, input.type.value);
                 input.description.value = "";
@@ -87,7 +85,7 @@ class CtrlAddItem{
             }
         }
         loadData(){
-            let storedData, newIncItem, newExpItem, budget;
+            let storedData, newIncItem, newExpItem;
 
             // Load data from local storage
             storedData = budgetController.getStoredData();
