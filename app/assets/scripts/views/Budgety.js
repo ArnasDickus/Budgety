@@ -1,5 +1,17 @@
 
+/* Implementing local Storage
 
+Currently I have data
+Save Income data
+Save Expense data
+
+APPCONTROLLER
+1) addItem() save local storage.
+
+BUDGETCONTROLLER
+1)
+
+*/
 
 class budgety{
     constructor(){

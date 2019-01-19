@@ -23,6 +23,13 @@ class BudgetController{
         this.calculateTotal;
         this.calculateBudget;
         this.deleteItem;
+
+        // Local Storage Methods
+        this.storeData;
+        this.deleteData;
+        this.getStoredData;
+        this.updateData;
+        
     }
     // Adds item that is either income or expense.
     addItemMethod(type, description, value){
@@ -39,8 +46,13 @@ class BudgetController{
         }else if (type === "inc"){
             newItem = new Income(ID, description, value);
         }
+
+        // Implement local storage
+        
         // Push it into our data structure.
         data.allItems[type].push(newItem);
+
+
 
         return newItem;
     }
@@ -80,6 +92,22 @@ class BudgetController{
             data.allItems[type].splice(index, 1);
         };
     };
+    storeData(){
+        localStorage.setItem('data', JSON.stringify(data));
+    };
+    deleteData(){
+        localStorage.removeItem('data');
+    };
+    getStoredData(){
+        let localData;
+        localData = JSON.parse(localStorage.getItem('data'));
+        return localData;
+    };
+    updateData(StoredData){
+        data.totals = StoredData.totals;
+        data.budget = StoredData.budget;
+        // data.percentage = StoredData.percentages
+    }
 }
 
 class Income {

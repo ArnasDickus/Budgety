@@ -15,21 +15,23 @@ class CtrlAddItem{
         this.deleteBtn  = document.querySelector(DOMstrings.container);
 
        
-
         // Methods
         this.addBtn.addEventListener('click', () => this.addItem());
         this.deleteBtn.addEventListener('click', (event) => this.deleteItem(event));
         this.addItem;
         this.updateBudget;
+        this.loadData;
         this.init();
     }
         // On startup.
         init(){
         uiController.displayMonth();
+        this.loadData();
         }
         // Click a addBtn button.
         addItem(){
             let input, newItem;
+            
             
             // 1) Get the filed input data    
             input = getInput;
@@ -37,15 +39,18 @@ class CtrlAddItem{
             if(input.description.value !== "" && !isNaN(input.value.value) && input.value.value > 0){
                 // 2) Add the item to the budget controller
                 newItem = budgetController.addItemMethod(input.type.value, input.description.value, input.value.value);
+                console.log(newItem);
 
                 // 3) Add the item to the UI
                 uiController.addListItem(newItem, input.type.value);
-
                 input.description.value = "";
                 input.value.value = "";
 
                 // Update budget screen
                 this.updateBudget();
+
+                // Store data
+                budgetController.storeData();
             }
         }
         // Update budget changes on the top.
@@ -53,9 +58,9 @@ class CtrlAddItem{
             let budget;
             // Calculate budget
            budget = budgetController.calculateBudget();
-
             // Display budget on screen
             uiController.displayBudget(budget);
+
         }
         // Deletes selected list item
         deleteItem(event){
@@ -75,6 +80,33 @@ class CtrlAddItem{
                 uiController.deleteListItem(itemID);
 
                 // Update Budget
+                this.updateBudget();
+
+                // Store data
+                budgetController.storeData();
+            }
+        }
+        loadData(){
+            let storedData, newIncItem, newExpItem, budget;
+
+            // Load data from local storage
+            storedData = budgetController.getStoredData();
+
+            if(storedData){
+                // Insert the data into the data structure
+                budgetController.updateData(storedData);
+                
+                // Create the Income Object 
+                storedData.allItems.inc.forEach(function(current){
+                    newIncItem = budgetController.addItemMethod('inc', current.description, current.value)
+                    uiController.addListItem(newIncItem, 'inc');
+                });
+                // Create the Expense Object
+                storedData.allItems.exp.forEach(function(current){
+                    newExpItem = budgetController.addItemMethod('exp', current.description, current.value)
+                    uiController.addListItem(newExpItem, 'exp');
+                });
+                // Display the Budget
                 this.updateBudget();
             }
         }

@@ -17101,6 +17101,7 @@ function () {
     });
     this.addItem;
     this.updateBudget;
+    this.loadData;
     this.init();
   } // On startup.
 
@@ -17109,6 +17110,7 @@ function () {
     key: "init",
     value: function init() {
       uiController.displayMonth();
+      this.loadData();
     } // Click a addBtn button.
 
   }, {
@@ -17120,13 +17122,16 @@ function () {
 
       if (input.description.value !== "" && !isNaN(input.value.value) && input.value.value > 0) {
         // 2) Add the item to the budget controller
-        newItem = budgetController.addItemMethod(input.type.value, input.description.value, input.value.value); // 3) Add the item to the UI
+        newItem = budgetController.addItemMethod(input.type.value, input.description.value, input.value.value);
+        console.log(newItem); // 3) Add the item to the UI
 
         uiController.addListItem(newItem, input.type.value);
         input.description.value = "";
         input.value.value = ""; // Update budget screen
 
-        this.updateBudget();
+        this.updateBudget(); // Store data
+
+        budgetController.storeData();
       }
     } // Update budget changes on the top.
 
@@ -17155,6 +17160,32 @@ function () {
         budgetController.deleteItem(type, ID); // Delete item from the UI
 
         uiController.deleteListItem(itemID); // Update Budget
+
+        this.updateBudget(); // Store data
+
+        budgetController.storeData();
+      }
+    }
+  }, {
+    key: "loadData",
+    value: function loadData() {
+      var storedData, newIncItem, newExpItem, budget; // Load data from local storage
+
+      storedData = budgetController.getStoredData();
+
+      if (storedData) {
+        // Insert the data into the data structure
+        budgetController.updateData(storedData); // Create the Income Object 
+
+        storedData.allItems.inc.forEach(function (current) {
+          newIncItem = budgetController.addItemMethod('inc', current.description, current.value);
+          uiController.addListItem(newIncItem, 'inc');
+        }); // Create the Expense Object
+
+        storedData.allItems.exp.forEach(function (current) {
+          newExpItem = budgetController.addItemMethod('exp', current.description, current.value);
+          uiController.addListItem(newExpItem, 'exp');
+        }); // Display the Budget
 
         this.updateBudget();
       }
@@ -17333,7 +17364,12 @@ function () {
     this.addItemMethod;
     this.calculateTotal;
     this.calculateBudget;
-    this.deleteItem;
+    this.deleteItem; // Local Storage Methods
+
+    this.storeData;
+    this.deleteData;
+    this.getStoredData;
+    this.updateData;
   } // Adds item that is either income or expense.
 
 
@@ -17352,7 +17388,8 @@ function () {
         newItem = new Expense(ID, description, value);
       } else if (type === "inc") {
         newItem = new Income(ID, description, value);
-      } // Push it into our data structure.
+      } // Implement local storage
+      // Push it into our data structure.
 
 
       data.allItems[type].push(newItem);
@@ -17398,6 +17435,29 @@ function () {
       }
 
       ;
+    }
+  }, {
+    key: "storeData",
+    value: function storeData() {
+      localStorage.setItem('data', JSON.stringify(data));
+    }
+  }, {
+    key: "deleteData",
+    value: function deleteData() {
+      localStorage.removeItem('data');
+    }
+  }, {
+    key: "getStoredData",
+    value: function getStoredData() {
+      var localData;
+      localData = JSON.parse(localStorage.getItem('data'));
+      return localData;
+    }
+  }, {
+    key: "updateData",
+    value: function updateData(StoredData) {
+      data.totals = StoredData.totals;
+      data.budget = StoredData.budget; // data.percentage = StoredData.percentages
     }
   }]);
 
