@@ -1,0 +1,46 @@
+.item{
+
+    padding: 13px;
+    border-bottom: 1px solid #e7e7e7;
+
+    &__value{
+        float: left;
+        transition: transform 0.3s;
+    }
+    &__percentage{
+          float: right;
+        margin-left: 20px;
+        transition: transform 0.3s;
+        font-size: 11px;
+        background-color: #FFDAD9;
+        padding: 3px;
+        border-radius: 3px;
+        width: 32px;
+        text-align: center;
+    }
+    &:first-child{
+        border-top: 1px solid #e7e7e7; 
+    }
+    &:nth-child(even){
+        background-color: #f7f7f7;
+    }
+    &__description{
+        float: left;
+    }
+    &__delete{
+        float: right;
+    }
+    &__delete--btn{
+        font-size: 22px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        display: inline-block;
+        vertical-align: middle;
+        line-height: 1;
+        display: block
+    }
+    &:hover &__delete--btn{
+        display: block
+    }
+}

@@ -89,16 +89,16 @@ class CtrlAddItem{
 
             // Load data from local storage
             storedData = budgetController.getStoredData();
-
             if(storedData){
                 // Insert the data into the data structure
                 budgetController.updateData(storedData);
-                
                 // Create the Income Object 
+        
                 storedData.allItems.inc.forEach(function(current){
                     newIncItem = budgetController.addItemMethod('inc', current.description, current.value)
                     uiController.addListItem(newIncItem, 'inc');
                 });
+              
                 // Create the Expense Object
                 storedData.allItems.exp.forEach(function(current){
                     newExpItem = budgetController.addItemMethod('exp', current.description, current.value)

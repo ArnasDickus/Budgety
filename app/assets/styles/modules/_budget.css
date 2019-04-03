@@ -1,0 +1,63 @@
+
+.budget{
+  
+
+    &__title{
+        font-size: 18px;
+        text-align: center;
+        margin-bottom: 10px;
+        font-weight: 300;
+        color: $mainWhite;
+    }
+    &__value {
+    font-weight: 300;
+    font-size: 46px;
+    text-align: center;
+    margin-bottom: 25px;
+    letter-spacing: 2px;
+    color: $mainWhite;
+
+    }
+    &__income {
+        padding: 12px;
+        text-transform: uppercase;
+        margin-bottom: 10px;
+        background-color: $mainBlue;
+        margin-right: auto;
+        margin-left: auto;
+        max-width: 300px;
+        color: $mainWhite;
+       
+    }
+    &__income--value{
+        float: right;
+        color: $mainWhite;
+    }
+    &__income--percentage{
+        float: right;
+        color: $mainWhite;
+    }
+    &__income--text,
+    &__expenses--text{
+        color: $mainWhite;
+        float: left;
+        font-size: 13px;
+        color: #444;
+        margin-top: 2px;
+    }
+
+    &__expenses {
+        padding: 12px;
+        text-transform: uppercase;
+        background-color: $mainRed;
+        margin-right: auto;
+        margin-left: auto;
+        max-width: 300px;
+        color: $mainWhite;
+    }
+    &__expenses--value{
+        float: right;
+    }
+
+}
+

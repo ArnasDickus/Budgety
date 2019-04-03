@@ -15,6 +15,11 @@
 @import "modules/_wrapper";
 @import "modules/_row";
 @import "modules/_section-title";
-@import "modules/_style";
+@import 'modules/_background';
+@import 'modules/_budget';
+@import 'modules/_input';
+@import 'modules/_income';
+@import 'modules/_expenses';
+@import 'modules/_item';
 
 /* testing-comment */

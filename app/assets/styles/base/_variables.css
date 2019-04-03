@@ -2,6 +2,12 @@
 
 /* Add only variables */
 
+/* Color */
+$mainBlue: #28B9B5;
+$mainRed: #FF5049;
+$mainWhite: #D4D8DB;
+$inputBackground: #f7f7f7;
+
 /*  Font-Size */
 $base_font_size: 1em;
 
